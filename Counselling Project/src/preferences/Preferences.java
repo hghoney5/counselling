@@ -1,32 +1,33 @@
-package college;
+package preferences;
 
 import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 
-public class AddCollege extends JFrame  {
+public class Preferences extends JFrame  {
 	
-	private String[] labelsName = {"College ID",
-			"College Name",
-			"Location",
-			"Address",
-			"Type",
-			"Contact",
-			"Trade",
-			"No. of Seats",
+	private String[] labelsName = {"Preference ID",
+			"Student ID",
+			"Student Name",
+			"Rank"
 			};
 	
-	private JTextField collegeIdTextField = new JTextField();
-	private JTextField collegeNameTextField = new JTextField();
-	private JTextField locationTextField = new JTextField();
-	private JTextField tradeTextField = new JTextField();
-	private JTextField noOfSeatsTextField = new JTextField();
-	private JTextField contactTextField = new JTextField();
-	private JTextArea addressTextArea = new JTextArea();
-	private ButtonGroup typeButtonGroup = new ButtonGroup();
-	private JRadioButton govtRadioButton = new JRadioButton("GOVT.");
-	private JRadioButton privateRadioButton = new JRadioButton("Private");
+	private JTextField preferenceIdTextField = new JTextField();
+	private JComboBox studentIdTextField = new JComboBox();
+	private JTextField studentNameTextField = new JTextField();
+	private JTextField rankTextField = new JTextField();
+	
+	private JComboBox[] collegeIdComboBox;
+	private JTextField[] collegeNameTextField;
+	private JTextField[] tradeTextField;
+	private String[] preferenceStrings = {
+			"First Preference",
+			"Second Preference",
+			"Third Preference",
+			"Fourth Preference",
+			"Fifth Preference"
+	};
 	
 	Panel panel = new Panel();
 	private JButton btnSubmit = new JButton("Submit");
@@ -42,7 +43,7 @@ public class AddCollege extends JFrame  {
 	
 	
 	
-	public AddCollege() {
+	public Preferences() {
 		Container c = getContentPane();
 		panel.setLayout(null);
 		panel.setSize(screenWidth,screenHeight);
@@ -61,7 +62,7 @@ public class AddCollege extends JFrame  {
 		c.add(panel);
 		
 		
-		JLabel heading = new JLabel("ADD COLLEGE");
+		JLabel heading = new JLabel("PREFERENCES");
 		heading.setFont(new Font("Arial",Font.BOLD,22));
 		heading.setBounds(xScreen+100,10,300,50);
 		heading.setForeground(new Color(255,255,255));
@@ -80,8 +81,9 @@ public class AddCollege extends JFrame  {
 		
 		
 		
-		printLabels();
-		setFields();
+//		printLabels();
+//		setFields();
+		setPreferences();
 		setButtons();
 		panel.add(backgroundImage);
 		
@@ -108,11 +110,51 @@ public class AddCollege extends JFrame  {
 		}
 	}
 	
-	private void setFields() {
+	private void setPreferences() {
+		JLabel[] preferenceLabels = new JLabel[5];
+		JLabel[] labels = new JLabel[5*3];
+		String[] preferenceStrings2 = {"College ID","College Name","Trade"};
+		collegeIdComboBox = new JComboBox[5];
+		
+		int x = xScreen, y=80, width=150, height=35,j=0,fieldHeight=25;
+		for(int i=0; i<5; i++)
+		{
+			preferenceLabels[i] = new JLabel();
+			preferenceLabels[i].setText(preferenceStrings[i]);
+			preferenceLabels[i].setBounds(x,y+(2*height*i),width,height);
+			preferenceLabels[i].setFont(labelsFont);
+			preferenceLabels[i].setForeground(Color.WHITE);
+			panel.add(preferenceLabels[i]);
+			
+			collegeIdComboBox[i] = new JComboBox();
+			collegeIdComboBox[i].setBounds(x+350,y+(2*height*i),width,fieldHeight);
+			panel.add(collegeIdComboBox[i]);
+//			labels[i] = new JLabel("College ID");
+//			labels[i].setBounds(x+200,y+(2*height*i),width,height);
+//			labels[i].setFont(labelsFont);
+//			labels[i].setForeground(Color.WHITE);
+//			panel.add(labels[i]);
+			for(int m=0; m<3; m++)
+			{
+				labels[j] = new JLabel(preferenceStrings2[m]);
+				labels[j].setBounds(x+200,y+(height*j),width,height);
+				if(m==2)
+					labels[j].setBounds(x+550,y+(2*height*i)+height,width,height);
+				labels[j].setFont(labelsFont);
+				labels[j].setForeground(Color.WHITE);
+				panel.add(labels[j]);
+				j++;
+			}
+			
+		}
+		
+	}
+	
+	/*private void setFields() {
 		typeButtonGroup.add(govtRadioButton);
 		typeButtonGroup.add(privateRadioButton);
 		int x=xScreen+200,y=85,width=170,height=25,spacing=35;
-		collegeIdTextField.setBounds(x,y,width,height);
+		preferenceIdTextField.setBounds(x,y,width,height);
 		collegeNameTextField.setBounds(x,y+(spacing),width,height);
 		locationTextField.setBounds(x,y+(2*spacing),width,height);
 		addressTextArea.setBounds(x,y+(3*spacing),width,height+25);
@@ -135,7 +177,7 @@ public class AddCollege extends JFrame  {
 		govtRadioButton.setForeground(Color.WHITE);
 		privateRadioButton.setForeground(Color.WHITE);
 		privateRadioButton.setOpaque(false);
-	}
+	}*/
 	
 	private void setButtons() {
 		btnSubmit.setBounds(xScreen+120, 450, 100, 30);
@@ -146,10 +188,11 @@ public class AddCollege extends JFrame  {
 	
 	
 	
-//	public static void main(String[] args)
-//	{
-//		AddCollege obj = new AddCollege();
-//		obj.setVisible(true);
-//	}
+	public static void main(String[] args)
+	{
+		Preferences obj = new Preferences();
+		obj.setVisible(true);
+	}
 
 }
+

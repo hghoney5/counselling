@@ -1,10 +1,12 @@
 package student;
 
 import java.awt.*;
+import java.awt.image.BufferedImage;
+
 import javax.swing.*;
 import javax.swing.event.*;
 
-public class AddStudent {
+public class AddStudent extends JFrame {
 
 	
 	private String[] labelsName = {"Student's ID",
@@ -40,31 +42,56 @@ public class AddStudent {
 	private JComboBox testComboBox = new JComboBox();
 	private JComboBox categoryComboBox = new JComboBox();
 	
+	private Font labelsFont = new Font("Arial",Font.BOLD,16);
+	
+	// Get user Screen Resolution
+	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+	int screenWidth = gd.getDisplayMode().getWidth();
+	int screenHeight = gd.getDisplayMode().getHeight();
+	int xScreen = (screenWidth*35)/100;
+	
 	
 	public void showStudentForm() {
 		
-		JFrame frame = new JFrame("Student Application");
+//		JFrame frame = new JFrame("Student Application");
+		
+		ImageIcon icon = new ImageIcon("images//student.jpg");
+		Image img = icon.getImage();
+		BufferedImage bi = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+		Graphics g = bi.createGraphics();
+		g.drawImage(img, 0, 0, screenWidth, screenHeight, null);
+		ImageIcon newIcon = new ImageIcon(bi);
+		
+		JLabel backgroundImage = new JLabel();
+		backgroundImage.setBounds(0,0,screenWidth,screenHeight);
+		backgroundImage.setIcon(newIcon);
+		
 		JLabel heading = new JLabel("STUDENT APPLICATION");
-		heading.setFont(new Font("Arial",Font.BOLD,20));
-		heading.setBounds(170,10,500,50);
+		heading.setFont(new Font("Arial",Font.BOLD,22));
+//		heading.setBounds(170,10,500,50);
+		heading.setBounds(xScreen+100,10,300,50);
+		heading.setForeground(new Color(255,255,255));
 		panel.add(heading);
-		frame.setVisible(true);
-		frame.setSize(600, 700);
-		Container c = frame.getContentPane();
+//		frame.setVisible(true);
+		Container c = getContentPane();
 		panel.setLayout(null);
 		printLabels();
 		setButtons();
 		setFields();
 		c.add(panel);
-		frame.setResizable(false);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		panel.add(backgroundImage);
+		setResizable(false);
+		setSize(screenWidth,screenHeight);
+		// setting frame in maximized state
+//		setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	private void printLabels() {
 	
 		JLabel[] labels = new JLabel[labelsName.length];
 		
-		int x = 100, y=80, width=100, height=35;
+		int x = xScreen, y=80, width=100, height=35;
 		
 		for(int i=0; i<labels.length; i++)
 		{
@@ -73,6 +100,8 @@ public class AddStudent {
 			labels[i] = new JLabel();
 			labels[i].setText(labelsName[i]);
 			labels[i].setBounds(x,y+(height*i),width,height);
+			labels[i].setFont(labelsFont);
+			labels[i].setForeground(new Color(255,255,255));
 			panel.add(labels[i]);
 		}
 	}
@@ -80,7 +109,7 @@ public class AddStudent {
 	private void setFields() {
 		genderButtonGroup.add(maleRadioButton);
 		genderButtonGroup.add(femaleRadioButton);
-		int x=280,y=85,width=170,height=25,spacing=35;
+		int x=xScreen+200,y=85,width=170,height=25,spacing=35;
 		studentIdTextField.setBounds(x,y,width,height);
 		studentNameTextField.setBounds(x,y+(spacing),width,height);
 		fatherNameTextField.setBounds(x,y+(2*spacing),width,height);
@@ -107,12 +136,17 @@ public class AddStudent {
 		panel.add(rankTextField);
 		panel.add(categoryComboBox);
 		panel.add(remarksTextArea);
+		// clearing radio backgrounds
+		maleRadioButton.setOpaque(false);
+		femaleRadioButton.setOpaque(false);
+		maleRadioButton.setForeground(Color.WHITE);
+		femaleRadioButton.setForeground(Color.WHITE);
 	}
 	
 	private void setButtons() {
-		btnSubmit.setBounds(220, 600, 100, 30);
+		btnSubmit.setBounds(xScreen+120, 600, 100, 30);
 		panel.add(btnSubmit);
-		btnCancel.setBounds(350, 600,100,30);
+		btnCancel.setBounds(xScreen+250, 600,100,30);
 		panel.add(btnCancel);
 	}
 	
@@ -120,10 +154,10 @@ public class AddStudent {
 		showStudentForm();
 	}
 	
-	public static void main(String[] args)
-	{
-//		showStudentForm();
-		AddStudent obj = new AddStudent();
-	}
+//	public static void main(String[] args)
+//	{
+//		AddStudent obj = new AddStudent();
+//		obj.setVisible(true);
+//	}
 
 }
