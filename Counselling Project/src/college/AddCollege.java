@@ -32,39 +32,35 @@ public class AddCollege extends JFrame  {
 	private JButton btnSubmit = new JButton("Submit");
 	private JButton btnCancel = new JButton("Cancel");
 	
-	private Font labelsFont = new Font("Arial",Font.BOLD,16);
+	private Font labelsFont = new Font("Arial",Font.PLAIN,16);
 	
 	// Get user Screen Resolution
-	GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
-	int screenWidth = gd.getDisplayMode().getWidth();
-	int screenHeight = gd.getDisplayMode().getHeight();
+			GraphicsDevice gd = GraphicsEnvironment.getLocalGraphicsEnvironment().getDefaultScreenDevice();
+			int screenWidth = gd.getDisplayMode().getWidth();
+			int screenHeight = gd.getDisplayMode().getHeight();
 	int xScreen = (screenWidth*35)/100;
 	
 	
 	
 	public AddCollege() {
 		Container c = getContentPane();
-		panel.setLayout(null);
-		panel.setSize(screenWidth,screenHeight);
+		ImageIcon icon = new ImageIcon("src//college//collegeBackground.jpg");
 		
-		ImageIcon icon = new ImageIcon("images//collegeBackgroundBlackOpacity.jpg");
 		Image img = icon.getImage();
-		BufferedImage bi = new BufferedImage(screenWidth, screenHeight, BufferedImage.TYPE_INT_ARGB);
+		BufferedImage bi = new BufferedImage(img.getWidth(null), img.getHeight(null), BufferedImage.TYPE_INT_ARGB);
 		Graphics g = bi.createGraphics();
-		g.drawImage(img, 0, 0, screenWidth, screenHeight, null);
+//		g.drawImage(img, 0, 0, screenWidth, screenHeight, null);
 		ImageIcon newIcon = new ImageIcon(bi);
 		
-		JLabel backgroundImage = new JLabel();
-		backgroundImage.setBounds(0,0,screenWidth,screenHeight);
-		backgroundImage.setIcon(newIcon);
-		
+		JLabel backgroundImage = new JLabel(newIcon);
+		backgroundImage.setBounds(0,0,1200,screenHeight);
 		c.add(panel);
 		
 		
 		JLabel heading = new JLabel("ADD COLLEGE");
 		heading.setFont(new Font("Arial",Font.BOLD,22));
 		heading.setBounds(xScreen+100,10,300,50);
-		heading.setForeground(new Color(255,255,255));
+		
 		
 		
 		panel.add(heading);
@@ -78,14 +74,14 @@ public class AddCollege extends JFrame  {
 //		setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		setResizable(false);
 		
-		
+		panel.setLayout(null);
 		
 		printLabels();
 		setFields();
 		setButtons();
 		panel.add(backgroundImage);
 		
-		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
 	
@@ -93,7 +89,7 @@ public class AddCollege extends JFrame  {
 		
 		JLabel[] labels = new JLabel[labelsName.length];
 		
-		int x = xScreen, y=80, width=130, height=35;
+		int x = xScreen, y=80, width=100, height=35;
 		
 		for(int i=0; i<labels.length; i++)
 		{
@@ -103,7 +99,6 @@ public class AddCollege extends JFrame  {
 			labels[i].setText(labelsName[i]);
 			labels[i].setBounds(x,y+(height*i),width,height);
 			labels[i].setFont(labelsFont);
-			labels[i].setForeground(new Color(255,255,255));
 			panel.add(labels[i]);
 		}
 	}
@@ -130,11 +125,6 @@ public class AddCollege extends JFrame  {
 		panel.add(contactTextField);
 		panel.add(tradeTextField);
 		panel.add(noOfSeatsTextField);
-		
-		govtRadioButton.setOpaque(false);
-		govtRadioButton.setForeground(Color.WHITE);
-		privateRadioButton.setForeground(Color.WHITE);
-		privateRadioButton.setOpaque(false);
 	}
 	
 	private void setButtons() {
@@ -146,10 +136,10 @@ public class AddCollege extends JFrame  {
 	
 	
 	
-//	public static void main(String[] args)
-//	{
-//		AddCollege obj = new AddCollege();
-//		obj.setVisible(true);
-//	}
+	public static void main(String[] args)
+	{
+		AddCollege obj = new AddCollege();
+		obj.setVisible(true);
+	}
 
 }
