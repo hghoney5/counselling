@@ -234,16 +234,18 @@ public class DeleteStudent extends JFrame implements ActionListener,ItemListener
 				if(message == 0)
 				{
 					db.executeUpdate("delete from student where studentId="+studentIdTextField.getSelectedItem());
-					studentIdTextField.removeItem(studentIdTextField.getSelectedItem());
-					if(closeOperationCheckBox.isSelected())
+//					studentIdTextField.removeItem(studentIdTextField.getSelectedItem());
+					if(studentIdTextField.getItemCount() == 1)
 					{
 						this.dispose();
-						try {
-							db.con.close();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					}
+					else if(closeOperationCheckBox.isSelected())
+					{
+						this.dispose();
+					}
+					else {
+						studentIdTextField.removeItem(studentIdTextField.getSelectedItem());
+//						updateFieldsByUserId();
 					}
 				}
  			} catch (SQLException e1) {

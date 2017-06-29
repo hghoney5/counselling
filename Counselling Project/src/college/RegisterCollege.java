@@ -201,7 +201,7 @@ public class RegisterCollege extends JFrame implements ActionListener  {
 			{
 				
 				try {
-					db.executeUpdate("insert into college(collegeId,collegeName,location,address,type,contact,trade,seats) values("+Integer.parseInt(collegeId)+",'"+collegeName+"','"+location+"','"+address+"','"+type+"','"+contact+"','"+trade+"',"+Integer.parseInt(seats)+");");
+					db.executeUpdate("insert into college(collegeId,collegeName,location,address,type,contact,trade,seats) values("+Integer.parseInt(collegeId)+",'"+collegeName+"','"+location+"','"+address+"','"+type+"','"+contact+"','"+trade+"',"+Integer.parseInt(seats)+")");
 					JOptionPane.showMessageDialog(this, "Inserted Successfully");
 				} catch (SQLException e1) {
 					// TODO Auto-generated catch block

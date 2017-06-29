@@ -194,7 +194,7 @@ public class RegisterStudent extends JFrame implements ActionListener {
 			String remarks = remarksTextArea.getText();
 //			Data obj = new Data();
 			try {
-				db.executeUpdate("insert into student(studentId,studentName,fatherName,motherName,gender,DOB,address,contact,testId,rank,category,remarks) values("+studentId+",'"+studentName+"','"+fatherName+"','"+motherName+"','"+gender+"','"+DOB+"','"+address+"','"+contact+"',"+testId+",'"+rank+"','"+category+"','"+remarks+"');");
+				db.executeUpdate("insert into student(studentId,studentName,fatherName,motherName,gender,DOB,address,contact,testId,rank,category,remarks) values("+studentId+",'"+studentName+"','"+fatherName+"','"+motherName+"','"+gender+"','"+DOB+"','"+address+"','"+contact+"',"+testId+",'"+rank+"','"+category+"','"+remarks+"')");
 				JOptionPane op=new JOptionPane();
 				op.showMessageDialog(this,"Registered Successfully.","Success",JOptionPane.INFORMATION_MESSAGE);
 				if(closeOperationCheckBox.isSelected())

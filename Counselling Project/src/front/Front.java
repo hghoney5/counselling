@@ -7,6 +7,7 @@ import javax.swing.*;
 import java.sql.*;
 
 import college.RegisterCollege;
+import data.Data;
 import college.AlterCollege;
 import college.DeleteCollege;
 import preferences.AlterPreferences;
@@ -22,7 +23,7 @@ import user.AlterUser;
 import user.DeleteUser;
 import user.RegisterUser;
 
-public class Front extends JFrame implements ActionListener{
+public class Front extends JFrame implements ActionListener,WindowListener{
 	
 	private JPanel panel = new JPanel();
 	// Get user Screen Resolution
@@ -41,6 +42,8 @@ public class Front extends JFrame implements ActionListener{
 	JMenuItem[] alterMenuItems = new JMenuItem[menuItems.length];
 	JMenuItem[] deleteMenuItems = new JMenuItem[menuItems.length];
 	
+	Data db = new Data();
+	
 	public Front() {
 		menus();
 		Container c = getContentPane();
@@ -51,7 +54,10 @@ public class Front extends JFrame implements ActionListener{
 		setSize(screenWidth,screenHeight);
 		setVisible(true);
 		setResizable(false);
+		addWindowListener(this);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		checkMenuAvalaibility();
 	}
 	
 	private void backgroundImage() {
@@ -91,6 +97,77 @@ public class Front extends JFrame implements ActionListener{
 		
 		setJMenuBar(menuBar);
 		
+	}
+	
+	public void checkMenuAvalaibility()
+	{
+		// setting menus disable if no data
+		int preference = databaseHasData("preferences");
+		int user = databaseHasData("user");
+		int test = databaseHasData("test");
+		int student = databaseHasData("student");
+		int college = databaseHasData("college");
+		
+		if(preference == 0)
+		{
+			alterMenuItems[0].setEnabled(false);
+			deleteMenuItems[0].setEnabled(false);
+		} else {
+			alterMenuItems[0].setEnabled(true);
+			deleteMenuItems[0].setEnabled(true);
+		}
+		if(user == 0)
+		{
+			alterMenuItems[1].setEnabled(false);
+			deleteMenuItems[1].setEnabled(false);
+		} else {
+			alterMenuItems[1].setEnabled(true);
+			deleteMenuItems[1].setEnabled(true);
+		}
+		if(test == 0)
+		{
+			alterMenuItems[4].setEnabled(false);
+			deleteMenuItems[4].setEnabled(false);
+		} else {
+			alterMenuItems[4].setEnabled(true);
+			deleteMenuItems[4].setEnabled(true);
+		}
+		if(student == 0)
+		{
+			alterMenuItems[3].setEnabled(false);
+			deleteMenuItems[3].setEnabled(false);
+		} else {
+			alterMenuItems[3].setEnabled(true);
+			deleteMenuItems[3].setEnabled(true);
+		}
+		if(college == 0)
+		{
+			alterMenuItems[2].setEnabled(false);
+			deleteMenuItems[2].setEnabled(false);
+		} else {
+			alterMenuItems[2].setEnabled(true);
+			deleteMenuItems[2].setEnabled(true);
+		}
+	}
+	
+	public int databaseHasData(String tableName) {
+		String sql = "select count(*) from "+tableName;
+		ResultSet rs;
+		int count=0;
+		try{
+			rs = db.executeQuery(sql);
+			while(rs.next())
+			{
+//				return rs.getInt(1);
+				count=rs.getInt(1);
+//				System.out.println(rs.getString(1));
+			}
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return count;
 	}
 	
 	public void actionPerformed(ActionEvent e)
@@ -183,6 +260,48 @@ public class Front extends JFrame implements ActionListener{
 	public static void main(String[] args)
 	{
 		Front obj = new Front();
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		checkMenuAvalaibility();
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

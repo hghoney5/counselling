@@ -2,10 +2,11 @@
 <classpath>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
-	<classpathentry kind="lib" path="E:/java workspaces/UCanAccess-4.0.2-bin/lib/commons-lang-2.6.jar"/>
-	<classpathentry kind="lib" path="E:/java workspaces/UCanAccess-4.0.2-bin/lib/commons-logging-1.1.1.jar"/>
-	<classpathentry kind="lib" path="E:/java workspaces/UCanAccess-4.0.2-bin/lib/hsqldb.jar"/>
-	<classpathentry kind="lib" path="E:/java workspaces/UCanAccess-4.0.2-bin/lib/jackcess-2.1.6.jar"/>
-	<classpathentry kind="lib" path="E:/java workspaces/UCanAccess-4.0.2-bin/ucanaccess-4.0.2.jar"/>
+	<classpathentry kind="lib" path="/Users/mac/git/counselling/Counselling Project/mysql-connector-java-5.1.42/mysql-connector-java-5.1.42-bin.jar"/>
+	<classpathentry kind="lib" path="/Users/mac/git/counselling/Counselling Project/mysql-connector-java-5.1.42/src/lib/c3p0-0.9.1-pre6.jar"/>
+	<classpathentry kind="lib" path="/Users/mac/git/counselling/Counselling Project/mysql-connector-java-5.1.42/src/lib/c3p0-0.9.1-pre6.src.zip"/>
+	<classpathentry kind="lib" path="/Users/mac/git/counselling/Counselling Project/mysql-connector-java-5.1.42/src/lib/jboss-common-jdbc-wrapper-src.jar"/>
+	<classpathentry kind="lib" path="/Users/mac/git/counselling/Counselling Project/mysql-connector-java-5.1.42/src/lib/jboss-common-jdbc-wrapper.jar"/>
+	<classpathentry kind="lib" path="/Users/mac/git/counselling/Counselling Project/mysql-connector-java-5.1.42/src/lib/slf4j-api-1.6.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

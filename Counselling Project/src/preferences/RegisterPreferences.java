@@ -23,7 +23,7 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 	private JTextField studentNameTextField = new JTextField();
 	private JTextField rankTextField = new JTextField();
 	
-	private JComboBox[] collegeIdComboBox;
+	private JComboBox<String>[] collegeIdComboBox;
 	private JTextField[] collegeNameTextField;
 	private JTextField[] tradeTextField;
 	private String[] preferenceStrings = {
@@ -100,6 +100,7 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 		for(int i=0; i<5; i++)
 		{
 			collegeIdComboBox[i].addItemListener(this);
+			showCollegeData(i);
 		}
 		studentIdTextField.addItemListener(this);
 	}
@@ -192,15 +193,15 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 	
 	public void addCollegeIds()
 	{
-		String sql="select collegeId from college";
+		String sql="select * from college";
 		try {
 			ResultSet resultCollege = db.executeQuery(sql);
 			while(resultCollege.next())
 			{
 				for(int i=0; i<5; i++)
 				{
-					collegeIdComboBox[i].addItem(String.valueOf(resultCollege.getString(1)));
-					showCollegeData(i);
+					collegeIdComboBox[i].addItem(String.valueOf(resultCollege.getString("collegeId")));
+//					showCollegeData(i);
 				}
 			}
 		} catch (SQLException e) {
@@ -231,7 +232,7 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 			{
 				
 				try {
-					db.executeUpdate("insert into preferences(preferenceId,studentId,preference1,preference2,preference3,preference4,preference5) values("+Integer.parseInt(preferenceId)+","+studentId+","+pref1+","+pref2+","+pref3+","+pref4+","+pref5+");");
+					db.executeUpdate("insert into preferences(preferenceId,studentId,preference1,preference2,preference3,preference4,preference5) values("+Integer.parseInt(preferenceId)+","+studentId+","+pref1+","+pref2+","+pref3+","+pref4+","+pref5+")");
 					JOptionPane.showMessageDialog(this, "Inserted Successfully");
 					if(closeOperationCheckBox.isSelected())
 					{
@@ -282,12 +283,12 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 
 	public void showCollegeData(int index) {
 		int id = Integer.valueOf((String) collegeIdComboBox[index].getSelectedItem());
-		String sql="select collegeName,trade from college where collegeId="+id;
+		String sql="select * from college where collegeId="+id;
 		try {
 			ResultSet result = db.executeQuery(sql);
 			result.next();
-			collegeNameTextField[index].setText(result.getString(1));
-			tradeTextField[index].setText(result.getString(2));
+			collegeNameTextField[index].setText(result.getString("collegeName"));
+			tradeTextField[index].setText(result.getString("trade"));
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

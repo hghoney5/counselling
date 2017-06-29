@@ -130,7 +130,7 @@ public class RegisterTest extends JFrame implements ActionListener {
 			String testName = testNameTextField.getText();
 			String remarks = remarksTextArea.getText();
 			try {
-				db.executeUpdate("insert into test(testId,testName,remarks) values("+testId+",'"+testName+"','"+remarks+"');");
+				db.executeUpdate("insert into test(testId,testName,remarks) values("+testId+",'"+testName+"','"+remarks+"')");
 				JOptionPane.showMessageDialog(this, "Inserted Successfully");
 			} catch (SQLException e1) {
 				// TODO Auto-generated catch block

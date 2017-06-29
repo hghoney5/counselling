@@ -22,7 +22,7 @@ public class AlterCollege extends JFrame implements ActionListener,ItemListener 
 			"No. of Seats",
 			};
 	
-	private JComboBox collegeIdTextField = new JComboBox();
+	private JComboBox<String> collegeIdTextField = new JComboBox<String>();
 	private JTextField collegeNameTextField = new JTextField();
 	private JTextField locationTextField = new JTextField();
 	private JTextField tradeTextField = new JTextField();

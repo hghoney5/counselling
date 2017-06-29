@@ -173,15 +173,18 @@ public class DeleteTest extends JFrame implements ActionListener,ItemListener {
 			if(message == 0)
 			{
 				delete();
-			}
-			if(closeOperationCheckBox.isSelected())
-			{
-				this.dispose();
-			}
-			else
-			{
-				testIdTextField.removeAllItems();
-				addId();
+				if(testIdTextField.getItemCount() == 1)
+				{
+					this.dispose();
+				}
+				else if(closeOperationCheckBox.isSelected())
+				{
+					this.dispose();
+				}
+				else {
+					testIdTextField.removeItem(testIdTextField.getSelectedItem());
+//					updateFieldsByUserId();
+				}
 			}
 			
 		}

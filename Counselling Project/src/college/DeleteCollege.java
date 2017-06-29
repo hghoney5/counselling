@@ -220,16 +220,18 @@ public class DeleteCollege extends JFrame implements ActionListener,ItemListener
 				if(message == 0)
 				{
 					db.executeUpdate("delete from college where collegeId="+collegeIdTextField.getSelectedItem());
-					collegeIdTextField.removeItem(collegeIdTextField.getSelectedItem());
-					if(closeOperationCheckBox.isSelected())
+//					collegeIdTextField.removeItem(collegeIdTextField.getSelectedItem());
+					if(collegeIdTextField.getItemCount() == 1)
 					{
 						this.dispose();
-						try {
-							db.con.close();
-						} catch (SQLException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
+					}
+					else if(closeOperationCheckBox.isSelected())
+					{
+						this.dispose();
+					}
+					else {
+						collegeIdTextField.removeItem(collegeIdTextField.getSelectedItem());
+//						updateFieldsByUserId();
 					}
 				}
 			} catch (SQLException e1) {

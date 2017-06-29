@@ -2,6 +2,9 @@ package user;
 
 import java.awt.*;
 import javax.swing.*;
+
+import data.Data;
+
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
@@ -41,7 +44,7 @@ public class DeleteUser extends JFrame implements ActionListener,ItemListener  {
 	int screenHeight = gd.getDisplayMode().getHeight();
 	int xScreen = (screenWidth*35)/100;
 	
-	
+	Data db = new Data();
 	
 	public DeleteUser() {
 		Container c = getContentPane();
@@ -151,20 +154,14 @@ public class DeleteUser extends JFrame implements ActionListener,ItemListener  {
 	}
 	
 	public void addId() {
-		Connection con;
-		Statement smt;
 		ResultSet rs;
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			rs =smt.executeQuery("select userId from user");
+			rs =db.executeQuery("select userId from user");
 			while(rs.next())
 			{
 			userIdTextField.addItem(String.valueOf(rs.getInt(1)));
 			}
 			userIdTextField.addItemListener(this);
-			con.close();
 		} 
 		catch(Exception e1) 
 		{
@@ -174,25 +171,22 @@ public class DeleteUser extends JFrame implements ActionListener,ItemListener  {
 	}
 	
 	public void delete() {
-		
-		Connection con;
-		Statement smt;
+
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			smt.executeUpdate("delete from user where userId="+userIdTextField.getSelectedItem());
-			con.close();
+			db.executeUpdate("delete from user where userId="+userIdTextField.getSelectedItem());
 //			JOptionPane op=new JOptionPane();
 //			op.showMessageDialog(this,"Your Data is Deleted Successfully");
-			if(closeOperationCheckBox.isSelected())
+			if(userIdTextField.getItemCount() == 1)
+			{
+				this.dispose();
+			}
+			else if(closeOperationCheckBox.isSelected())
 			{
 				this.dispose();
 			}
 			else {
-				userIdTextField.removeAllItems();
-				addId();
-				updateFieldsByUserId();
+				userIdTextField.removeItem(userIdTextField.getSelectedItem());
+//				updateFieldsByUserId();
 			}
 			
 		} 
@@ -209,32 +203,21 @@ public class DeleteUser extends JFrame implements ActionListener,ItemListener  {
 		}
 		if(e.getSource() == btnSubmit)
 		{
-			if(!(Arrays.equals(passwordField.getPassword(), confirmPasswordField.getPassword())))
-			{
-				JOptionPane pwdDialog= new JOptionPane();
-				pwdDialog.showMessageDialog(this, "Password Doesn't match");
-			}
-			else {
+			
 				int confirm = JOptionPane.showConfirmDialog(null, "Do you really want to Delete?","Delete",JOptionPane.YES_NO_OPTION);
 				if(confirm == 0)
 				{
 					delete();
 				}
 				
-			}
 		}
 	}
 
 	public void updateFieldsByUserId()
 	{
-		Connection con;
-		Statement smt;
 		ResultSet rs;
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			rs=smt.executeQuery("select * from user where userId="+userIdTextField.getSelectedItem());
+			rs=db.executeQuery("select * from user where userId="+userIdTextField.getSelectedItem());
 			rs.next();
 			userNameTextField.setText(rs.getString(3));
 			passwordField.setText(rs.getString(4));
@@ -242,7 +225,6 @@ public class DeleteUser extends JFrame implements ActionListener,ItemListener  {
 			designationTextField.setText(rs.getString(6));
 			remarksTextArea.setText(rs.getString(7));
 			
-			con.close();
 		} 
 		catch(Exception e1) 
 		{

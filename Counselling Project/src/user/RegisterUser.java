@@ -2,6 +2,9 @@ package user;
 
 import java.awt.*;
 import javax.swing.*;
+
+import data.Data;
+
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
@@ -41,7 +44,7 @@ public class RegisterUser extends JFrame implements ActionListener  {
 	int screenHeight = gd.getDisplayMode().getHeight();
 	int xScreen = (screenWidth*35)/100;
 	
-	
+	Data db = new Data();
 	
 	public RegisterUser() {
 		Container c = getContentPane();
@@ -142,14 +145,9 @@ public class RegisterUser extends JFrame implements ActionListener  {
 		String fullName = fullNameTextField.getText();
 		String designation = designationTextField.getText();
 		String remarks = remarksTextArea.getText();
-		Connection con;
-		Statement smt;
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			smt.executeUpdate("insert into user(userId,username,password,fullName,designation,remarks) values("+userId+",'"+username+"','"+password+"','"+fullName+"','"+designation+"','"+remarks+"');");
-			con.close();
+			
+			db.executeUpdate("insert into user(userId,username,password,fullName,designation,remarks) values("+userId+",'"+username+"','"+password+"','"+fullName+"','"+designation+"','"+remarks+"');");
 			JOptionPane op=new JOptionPane();
 			op.showMessageDialog(this,"Your Data is Updated");
 			if(closeOperationCheckBox.isSelected())

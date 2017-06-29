@@ -4,6 +4,9 @@ import java.awt.*;
 import javax.swing.*;
 import java.awt.event.*;
 import javax.swing.event.*;
+
+import data.Data;
+
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -42,7 +45,7 @@ public class AlterUser extends JFrame implements ActionListener,ItemListener  {
 	int screenHeight = gd.getDisplayMode().getHeight();
 	int xScreen = (screenWidth*35)/100;
 	
-	
+	Data db = new Data();
 	
 	public AlterUser() {
 		Container c = getContentPane();
@@ -144,20 +147,14 @@ public class AlterUser extends JFrame implements ActionListener,ItemListener  {
 	}
 	
 	public void addId() {
-		Connection con;
-		Statement smt;
 		ResultSet rs;
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			rs =smt.executeQuery("select userId from user");
+			rs =db.executeQuery("select userId from user");
 			while(rs.next())
 			{
 			userIdTextField.addItem(String.valueOf(rs.getInt(1)));
 			}
 			userIdTextField.addItemListener(this);
-			con.close();
 		} 
 		catch(Exception e1) 
 		{
@@ -174,14 +171,8 @@ public class AlterUser extends JFrame implements ActionListener,ItemListener  {
 		String designation = designationTextField.getText();
 		String remarks = remarksTextArea.getText();
 		
-		Connection con;
-		Statement smt;
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			smt.executeUpdate("update user set username='"+username+"', password='"+password+"', fullName='"+fullName+"', designation='"+designation+"', remarks='"+remarks+"' where userId="+userIdTextField.getSelectedItem());
-			con.close();
+			db.executeUpdate("update user set username='"+username+"', password='"+password+"', fullName='"+fullName+"', designation='"+designation+"', remarks='"+remarks+"' where userId="+userIdTextField.getSelectedItem());
 			JOptionPane op=new JOptionPane();
 			op.showMessageDialog(this,"Your Data is Altered Successfully");
 			if(closeOperationCheckBox.isSelected())
@@ -221,14 +212,9 @@ public class AlterUser extends JFrame implements ActionListener,ItemListener  {
 
 	public void updateFieldsByUserId()
 	{
-		Connection con;
-		Statement smt;
 		ResultSet rs;
 		try {
-			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
-			con=DriverManager.getConnection("jdbc:ucanaccess://database.accdb");
-			smt=con.createStatement();
-			rs=smt.executeQuery("select * from user where userId="+userIdTextField.getSelectedItem());
+			rs=db.executeQuery("select * from user where userId="+userIdTextField.getSelectedItem());
 			rs.next();
 			userNameTextField.setText(rs.getString(3));
 			passwordField.setText(rs.getString(4));
@@ -236,7 +222,6 @@ public class AlterUser extends JFrame implements ActionListener,ItemListener  {
 			designationTextField.setText(rs.getString(6));
 			remarksTextArea.setText(rs.getString(7));
 			
-			con.close();
 		} 
 		catch(Exception e1) 
 		{
