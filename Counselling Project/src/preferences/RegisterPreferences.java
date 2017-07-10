@@ -103,6 +103,21 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 			showCollegeData(i);
 		}
 		studentIdTextField.addItemListener(this);
+		
+		try {
+			ResultSet rs = db.executeQuery("select preferenceId from preferences order by preferenceId DESC");
+			if(rs.next() != false)
+			{
+				int id = rs.getInt("preferenceId") +1;
+				preferenceIdTextField.setText(String.valueOf(id));
+			}
+			else {
+				preferenceIdTextField.setText("1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -174,6 +189,8 @@ public class RegisterPreferences extends JFrame implements ActionListener,ItemLi
 			}
 			
 		}
+		
+		preferenceIdTextField.setEditable(false);
 		
 	}
 	

@@ -9,6 +9,8 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Arrays;
 
@@ -84,6 +86,21 @@ public class RegisterUser extends JFrame implements ActionListener  {
 		panel.add(backgroundImage);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		try {
+			ResultSet rs = db.executeQuery("select userId from user order by userId DESC");
+			if(rs.next() != false)
+			{
+				int id = rs.getInt("userId") +1;
+				userIdTextField.setText(String.valueOf(id));
+			}
+			else {
+				userIdTextField.setText("1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -121,7 +138,7 @@ public class RegisterUser extends JFrame implements ActionListener  {
 		panel.add(fullNameTextField);
 		panel.add(designationTextField);
 		panel.add(remarksTextArea);
-		
+		userIdTextField.setEditable(false);
 	}
 	
 	private void setButtons() {

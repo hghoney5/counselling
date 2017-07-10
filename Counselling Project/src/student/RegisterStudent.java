@@ -94,6 +94,21 @@ public class RegisterStudent extends JFrame implements ActionListener {
 		// setting frame in maximized state
 //		setExtendedState(java.awt.Frame.MAXIMIZED_BOTH);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		try {
+			ResultSet rs = db.executeQuery("select studentId from student order by studentId DESC");
+			if(rs.next() != false)
+			{
+				int id = rs.getInt("studentId") +1;
+				studentIdTextField.setText(String.valueOf(id));
+			}
+			else {
+				studentIdTextField.setText("1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void printLabels() {
@@ -150,6 +165,8 @@ public class RegisterStudent extends JFrame implements ActionListener {
 		femaleRadioButton.setOpaque(false);
 		maleRadioButton.setForeground(Color.WHITE);
 		femaleRadioButton.setForeground(Color.WHITE);
+		
+		studentIdTextField.setEditable(false);
 	}
 	
 	private void setButtons() {

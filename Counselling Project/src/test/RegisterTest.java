@@ -11,6 +11,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import javax.swing.*;
@@ -75,6 +76,20 @@ public class RegisterTest extends JFrame implements ActionListener {
 		setSize(screenWidth,screenHeight);
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	
+		try {
+			ResultSet rs = db.executeQuery("select testId from test order by testId DESC");
+			if(rs.next() != false)
+			{
+				int id = rs.getInt("testId") +1;
+				testIdTextField.setText(String.valueOf(id));
+			}
+			else {
+				testIdTextField.setText("1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	private void printLabels() {
@@ -103,6 +118,8 @@ public class RegisterTest extends JFrame implements ActionListener {
 		panel.add(testIdTextField);
 		panel.add(testNameTextField);
 		panel.add(remarksTextArea);
+		
+		testIdTextField.setEditable(false);
 	}
 	
 	private void setButtons() {

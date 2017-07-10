@@ -7,6 +7,7 @@ import data.Data;
 
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class RegisterCollege extends JFrame implements ActionListener  {
@@ -91,6 +92,21 @@ public class RegisterCollege extends JFrame implements ActionListener  {
 		panel.add(backgroundImage);
 		
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		
+		try {
+			ResultSet rs = db.executeQuery("select collegeId from college order by collegeId DESC");
+			if(rs.next() != false)
+			{
+				int id = rs.getInt("collegeId") +1;
+				collegeIdTextField.setText(String.valueOf(id));
+			}
+			else {
+				collegeIdTextField.setText("1");
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -140,6 +156,7 @@ public class RegisterCollege extends JFrame implements ActionListener  {
 		govtRadioButton.setForeground(Color.WHITE);
 		privateRadioButton.setForeground(Color.WHITE);
 		privateRadioButton.setOpaque(false);
+		collegeIdTextField.setEditable(false);
 	}
 	
 	private void setButtons() {
